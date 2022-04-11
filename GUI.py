@@ -6,9 +6,6 @@ import time
 import enchant
 
 
-# COMMENT WHERE YOU WANNA GO
-
-
 class Boggle(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -24,6 +21,7 @@ class Boggle(tk.Frame):
     def create_boggle(self):
         # make all the widgets. or at least most of them
         """
+        We want:
         4x4 grid; 16 widgets in total
 
         """
@@ -54,7 +52,7 @@ class Boggle(tk.Frame):
                                 command=lambda index=(i, j): self.click_tile(index), height=2, width=5)
                 button.grid(row=i, column=j)
                 row.append(button)
-                # buttons_list[i][j] = Button(bottom_frame, text=str(i) + str(j))   # Why doesn't this work??!?! :(((
+                # buttons_list[i][j] = Button(bottom_frame, text=str(i) + str(j))
                 # buttons_list[i][j].grid(row=i, column=j)
             buttons_list.append(row)
 
@@ -131,14 +129,27 @@ class Boggle(tk.Frame):
 
     def click_tile(self, index_coord):
         i, j = index_coord
+        if self.last_button_clicked == []:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i and self.last_button_clicked[1] == j:
+            pass
+        elif self.last_button_clicked[0] == i and self.last_button_clicked[1] == j + 1:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i + 1 and self.last_button_clicked[1] == j:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i - 1 and self.last_button_clicked[1] == j:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i - 1 and self.last_button_clicked[1] == j - 1:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i + 1 and self.last_button_clicked[1] == j - 1:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i - 1 and self.last_button_clicked[1] == j + 1:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i + 1 and self.last_button_clicked[1] == j + 1:
+            self.word += self.buttonList[i][j].cget("text")
+        elif self.last_button_clicked[0] == i and self.last_button_clicked[1] == j - 1:
+            self.word += self.buttonList[i][j].cget("text")
 
-        if [i + 1][j + 1]:
-            pass
-        elif [i][j + 1]:
-            pass
-        elif [i + 1][j]:
-            pass
-        self.word += self.buttonList[i][j].cget("text")
         self.last_button_clicked = [i, j]
 
     # Check if word created is a valid word
